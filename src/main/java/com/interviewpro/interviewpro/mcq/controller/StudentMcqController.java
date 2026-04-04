@@ -23,7 +23,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/interviewpro/mcq/v1/student")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
 public class StudentMcqController {
 

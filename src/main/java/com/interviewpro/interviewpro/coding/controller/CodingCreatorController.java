@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/interviewpro/coding/v1/creator")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('CREATOR')")
 public class CodingCreatorController {

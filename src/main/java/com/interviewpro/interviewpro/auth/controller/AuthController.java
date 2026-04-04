@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 @RequestMapping("interviewpro/entry/v1")
-@CrossOrigin( origins = "http://localhost:4200" , allowCredentials = "true", allowedHeaders = "*" , methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS,RequestMethod.HEAD})
 public class AuthController {
 	
 	@Autowired

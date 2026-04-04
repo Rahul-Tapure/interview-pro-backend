@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 @RestController
 @RequestMapping("/interviewpro/communication")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
-
 @RequiredArgsConstructor
 public class CommunicationController {
 

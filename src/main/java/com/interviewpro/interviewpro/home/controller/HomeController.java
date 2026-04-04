@@ -18,7 +18,6 @@ import com.interviewpro.interviewpro.mcq.enums.TestType;
 
 @RestController
 @RequestMapping("/interviewpro/home")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
 public class HomeController {
 

@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/resume")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequiredArgsConstructor
 public class ResumeController {
 
