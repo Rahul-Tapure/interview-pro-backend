@@ -18,29 +18,25 @@ import com.interviewpro.interviewpro.mcq.enums.TestType;
 
 @RestController
 @RequestMapping("/interviewpro/home")
-@PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
 public class HomeController {
 
     @Autowired
     private HomeService commonService;
 
     /* =============================
-       ✅ COMMON / PUBLIC APIs
+       ✅ PUBLIC APIs (viewable without auth)
     ============================== */
 
-    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
     @GetMapping("/stats")
     public ResponseEntity<HomeStatsResponse> getAllStats() {
         return ResponseEntity.ok(commonService.getAllStats());
     }
     
-    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
     @GetMapping("/tests")
     public ResponseEntity<List<TestListResponse>> getAllPublicTests() {
         return ResponseEntity.ok(commonService.getAllPublicTests());
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
     @GetMapping("/tests/by-type")
     public ResponseEntity<List<TestListResponse>> getPublicTestsByType(
             @RequestParam TestType type) {

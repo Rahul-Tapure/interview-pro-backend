@@ -49,17 +49,28 @@ public class SecurityConfiguration {
         			        "/interviewpro/entry/v1/password-change/verify-otp"
         			    ).permitAll()
 
-        			    // 🔓 TEMP: allow coding execution without login (for testing)
+        			    // 🔓 PUBLIC: View stats and tests (GET only)
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/home/stats").permitAll()
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/home/tests/by-type").permitAll()
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/mcq/v1/common/**").permitAll()
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/communication/tests").permitAll()
+        			    .requestMatchers(HttpMethod.GET, "/api/resume/**").permitAll()
+        			    
+        			    // 🔐 PROTECTED: Resume analysis requires auth (POST/PUT/DELETE)
+        			    .requestMatchers(HttpMethod.POST, "/api/resume/analyze").authenticated()
+        			    
+        			    // 🔓 PUBLIC but specific endpoints
         			    .requestMatchers("/interviewpro/coding/run").permitAll()
         			    .requestMatchers("/interviewpro/coding/languages").permitAll()
-        			    .requestMatchers("/interviewpro/coding/v1/my-results").permitAll()
-        			    .requestMatchers("/api/resume/**").permitAll()
-        			    // Allow AssemblyAI webhook
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/coding/v1/my-results").permitAll()
+        			    
+        			    // 🔓 Allow AssemblyAI webhook
         	            .requestMatchers("/interviewpro/communication/webhook/assemblyai").permitAll()
-        			    // Allow contact form submission without auth
+        	            
+        			    // 🔓 Allow contact form submission without auth
         			    .requestMatchers("/interviewpro/api/contact").permitAll()
-        			    .requestMatchers("/interviewpro/coding/submit").authenticated()
-        			    // static
+        			    
+        			    // 🔓 Static files
         			    .requestMatchers(
         			        "/",
         			        "/login",
@@ -67,6 +78,7 @@ public class SecurityConfiguration {
         			        "/assets/**"
         			    ).permitAll()
 
+        			    // 🔐 Everything else requires authentication
         			    .anyRequest().authenticated()
         			)            .cors(Customizer.withDefaults())
             .csrf(AbstractHttpConfigurer::disable)
