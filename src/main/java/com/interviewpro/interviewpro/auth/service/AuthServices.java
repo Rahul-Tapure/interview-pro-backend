@@ -76,11 +76,16 @@ public class AuthServices {
         );
 
         String token = jwtService.generateToken(req.getEmail());
+        
+        // Get user roles for response
+        UserTable user = usersTableRepo.findById(req.getEmail()).orElse(null);
+        String userRole = (user != null) ? user.getRole() : "";
 
+        // 🔥 FIX: secure=true for HTTPS, sameSite=None for cross-origin
         ResponseCookie cookie = ResponseCookie.from("entrypasstoken", token)
                 .httpOnly(true)
-                .secure(false)        // true in production (HTTPS)
-                .sameSite("Lax")   // use "None" if frontend is on different domain
+                .secure(true)           // ✅ HTTPS-only (Render is HTTPS)
+                .sameSite("None")       // ✅ Allow cross-origin (Netlify ↔ Render)
                 .path("/")
                 .maxAge(20 * 24 * 60 * 60)
                 .build();
@@ -88,9 +93,14 @@ public class AuthServices {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
 
+        // 🔥 FIX: Return token in response body as fallback
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(Map.of("message", "Login successful"));
+                .body(Map.of(
+                    "message", "Login successful",
+                    "token", token,
+                    "data", Map.of("roles", userRole)
+                ));
     }
 
     /* ================= REGISTER ================= */
@@ -123,8 +133,8 @@ public class AuthServices {
 
         ResponseCookie cookie = ResponseCookie.from("entrypasstoken", "")
                 .httpOnly(true)
-                .secure(false)
-                .sameSite("Lax")
+                .secure(true)           // ✅ HTTPS-only
+                .sameSite("None")       // ✅ Cross-origin
                 .path("/")
                 .maxAge(0)
                 .build();
@@ -151,8 +161,8 @@ public class AuthServices {
 
         ResponseCookie cookie = ResponseCookie.from("entrypasstoken", "")
                 .httpOnly(true)
-                .secure(false)
-                .sameSite("Lax")
+                .secure(true)           // ✅ HTTPS-only
+                .sameSite("None")       // ✅ Cross-origin
                 .path("/")
                 .maxAge(0)
                 .build();
