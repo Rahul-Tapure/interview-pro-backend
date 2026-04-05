@@ -18,7 +18,7 @@ public class CorsConfig {
 
         config.setAllowedOrigins(List.of(
                 "http://localhost:4200",
-                "https://interview-prepration-pro.netlify.app"
+                "https://interview-pro-frontend.vercel.app"
         ));
         config.setAllowedMethods(List.of(
                 "GET", "POST", "PUT", "DELETE", "OPTIONS"
