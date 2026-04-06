@@ -51,12 +51,6 @@ public class CodingCreatorController {
         return service.getMyCodingTestsQuestion(testId);
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
-    @PostMapping("/start-attempt/{testId}")
-    public ResponseEntity<Map<String, String>> startAttempt(@PathVariable Long testId) {
-        String attemptId = java.util.UUID.randomUUID().toString();
-        return ResponseEntity.ok(Map.of("attemptId", attemptId));
-    }
 
     /* ✅ Update Test */
     @PreAuthorize("hasRole('CREATOR')")

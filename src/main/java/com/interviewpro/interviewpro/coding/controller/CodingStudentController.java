@@ -1,9 +1,9 @@
 package com.interviewpro.interviewpro.coding.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.interviewpro.interviewpro.judge0.entity.CodingSubmission;
 import com.interviewpro.interviewpro.mcq.dto.response.ResultResponse;
@@ -44,5 +44,11 @@ public class CodingStudentController {
                 .getName();
 
         return service.getCodingResults(email);
+    }
+    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
+    @PostMapping("/start-attempt/{testId}")
+    public ResponseEntity<Map<String, String>> startAttempt(@PathVariable Long testId) {
+        String attemptId = java.util.UUID.randomUUID().toString();
+        return ResponseEntity.ok(Map.of("attemptId", attemptId));
     }
 }
