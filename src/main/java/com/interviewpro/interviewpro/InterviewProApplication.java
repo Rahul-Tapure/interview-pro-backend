@@ -7,12 +7,14 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication
 public class InterviewProApplication {
-	public static void main(String[] args) {
-		
 
-		Dotenv.configure().ignoreIfMissing().load();
-		
-		SpringApplication.run(InterviewProApplication.class, args);
-	}
+    public static void main(String[] args) {
 
+        Dotenv dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
+
+
+        SpringApplication.run(InterviewProApplication.class, args);
+    }
 }

@@ -68,8 +68,8 @@ public class SecurityConfiguration {
         			    .requestMatchers("/interviewpro/coding/run").permitAll()
         			    .requestMatchers("/interviewpro/coding/languages").permitAll()
         			    
-        			    // 🔐 PROTECTED: My results endpoint requires authentication
-        			    .requestMatchers(HttpMethod.GET, "/interviewpro/coding/v1/my-results").authenticated()
+        			    // � My results endpoint - allow public access
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/coding/v1/my-results").permitAll()
         			    
         			    // 🔓 Allow AssemblyAI webhook
         	            .requestMatchers("/interviewpro/communication/webhook/assemblyai").permitAll()

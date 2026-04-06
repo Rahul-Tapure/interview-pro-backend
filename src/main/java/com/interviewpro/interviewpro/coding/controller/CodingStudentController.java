@@ -21,8 +21,7 @@ public class CodingStudentController {
 
     private final CodingStudentService service;
 
-    // ✅ Get My Results
-    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
+    // ✅ Get My Results - Public access allowed
     @GetMapping("/v1/my-results")
     public List<ResultResponse> myResults() {
         String email = SecurityContextHolder
