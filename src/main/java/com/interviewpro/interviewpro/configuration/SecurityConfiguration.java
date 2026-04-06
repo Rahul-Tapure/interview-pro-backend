@@ -53,11 +53,16 @@ public class SecurityConfiguration {
         			    .requestMatchers(HttpMethod.GET, "/interviewpro/home/stats").permitAll()
         			    .requestMatchers(HttpMethod.GET, "/interviewpro/home/tests/by-type").permitAll()
         			    .requestMatchers(HttpMethod.GET, "/interviewpro/mcq/v1/common/**").permitAll()
-        			    .requestMatchers(HttpMethod.GET, "/interviewpro/communication/**").permitAll()
+        			    
+        			    // 🔓 COMMUNICATION: Public GET access to view tests and questions
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/communication/tests").permitAll()
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/communication/tests/**").permitAll()
         			    .requestMatchers(HttpMethod.GET, "/api/resume/**").permitAll()
         			    
-        			    // 🔐 PROTECTED: Resume analysis requires auth (POST/PUT/DELETE)
+        			    // 🔐 PROTECTED: Resume analysis and test operations require auth
         			    .requestMatchers(HttpMethod.POST, "/api/resume/analyze").authenticated()
+        			    .requestMatchers(HttpMethod.POST, "/interviewpro/coding/v1/start-attempt/**").authenticated()
+        			    .requestMatchers(HttpMethod.POST, "/interviewpro/coding/submit").authenticated()
         			    
         			    // 🔓 PUBLIC but specific endpoints
         			    .requestMatchers("/interviewpro/coding/run").permitAll()
