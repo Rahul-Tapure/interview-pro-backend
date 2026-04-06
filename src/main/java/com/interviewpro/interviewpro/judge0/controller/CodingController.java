@@ -27,7 +27,8 @@ public class CodingController {
     	return runService.run(request);
     }
 
-    @PostMapping("/submit")
+    // ✅ Changed to /judge0/submit to avoid conflict with CodingStudentController#submitCode()
+    @PostMapping("/judge0/submit")
     public SubmitResultResponse submit(@RequestBody SubmitCodeRequest request) {
         return submitService.submit(request);
     }
