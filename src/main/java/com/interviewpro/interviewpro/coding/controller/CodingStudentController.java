@@ -30,11 +30,11 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/interviewpro/coding/v1")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
 public class CodingStudentController {
 
     private final CodingStudentService service;
 
+    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
     @GetMapping("/my-results")
     public List<ResultResponse> myResults() {
 
