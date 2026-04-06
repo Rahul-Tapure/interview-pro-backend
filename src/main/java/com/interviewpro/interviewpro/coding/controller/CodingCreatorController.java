@@ -178,6 +178,9 @@ public class CodingCreatorController {
 
     // ✅ Delete TestCase
     @PreAuthorize("hasRole('CREATOR')")
+    @DeleteMapping("/test-cases/{id}")
+    public ResponseEntity<Void> deleteTestCase(@PathVariable Long id) {
+        service.deleteTestCase(id);
         return ResponseEntity.ok().build();
     }
 
