@@ -19,5 +19,6 @@ public interface CodingSubmissionRepository extends JpaRepository<CodingSubmissi
     List<CodingSubmission> findByCodingTest_TestId(Long testId);
     List<CodingSubmission> findByUserEmailAndCodingTest_TestId(
             String email, Long testId);
+    List<CodingSubmission> findByAttemptId(String attemptId);
 
 }
