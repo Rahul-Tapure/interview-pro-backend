@@ -53,7 +53,7 @@ public class SecurityConfiguration {
         			    .requestMatchers(HttpMethod.GET, "/interviewpro/home/stats").permitAll()
         			    .requestMatchers(HttpMethod.GET, "/interviewpro/home/tests/by-type").permitAll()
         			    .requestMatchers(HttpMethod.GET, "/interviewpro/mcq/v1/common/**").permitAll()
-        			    .requestMatchers(HttpMethod.GET, "/interviewpro/communication/tests").permitAll()
+        			    .requestMatchers(HttpMethod.GET, "/interviewpro/communication/**").permitAll()
         			    .requestMatchers(HttpMethod.GET, "/api/resume/**").permitAll()
         			    
         			    // 🔐 PROTECTED: Resume analysis requires auth (POST/PUT/DELETE)
