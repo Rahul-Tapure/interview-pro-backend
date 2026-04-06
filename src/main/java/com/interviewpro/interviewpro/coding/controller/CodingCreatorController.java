@@ -22,10 +22,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/interviewpro/coding/v1/creator")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('CREATOR')")
 public class CodingCreatorController {
 
-	@Autowired
+        @Autowired
     private final CodingCreatorService service;
 
     /* ==========================================================
@@ -33,30 +32,34 @@ public class CodingCreatorController {
        ========================================================== */
 
     // ✅ Create Coding Test (Same UI as MCQ)
+    @PreAuthorize("hasRole('CREATOR')")
     @PostMapping("/tests")
-    public CodingTest createTest(@RequestBody CodingTestRequest request) {
+    public CodingTest createTest(@RequestBody CodingTestRequest request) {      
         return service.createCodingTest(request);
     }
 
     // ✅ Get My Coding Tests (Dashboard)
+    @PreAuthorize("hasRole('CREATOR')")
     @GetMapping("/tests")
     public List<CodingTestListResponse> getMyTests() {
         return service.getMyCodingTests();
     }
-    
-    @PreAuthorize("hasRole('STUDENT')")
+
+    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
     @GetMapping("/tests/{testId}/questions")
     public List<CodingQuestionResponse> getMyTestsQuestion(@PathVariable Long testId) {
         return service.getMyCodingTestsQuestion(testId);
     }
-    
+
+    @PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
     @PostMapping("/start-attempt/{testId}")
     public ResponseEntity<Map<String, String>> startAttempt(@PathVariable Long testId) {
         String attemptId = java.util.UUID.randomUUID().toString();
         return ResponseEntity.ok(Map.of("attemptId", attemptId));
     }
-    
+
     /* ✅ Update Test */
+    @PreAuthorize("hasRole('CREATOR')")
     @PutMapping("/tests/{id}")
     public CodingTestResponse updateTest(
             @PathVariable Long id,
@@ -67,12 +70,14 @@ public class CodingCreatorController {
 
 
     // ✅ Get Test By ID (View Button)
+    @PreAuthorize("hasRole('CREATOR')")
     @GetMapping("/tests/{id}")
     public CodingTestResponse getTestById(@PathVariable Long id) {
         return service.getCodingTestById(id);
     }
 
     /* ✅ Publish Full Test */
+    @PreAuthorize("hasRole('CREATOR')")
     @PostMapping("/tests/{id}/publish")
     public ResponseEntity<Void> publishTest(@PathVariable Long id) {
         service.publishCodingTest(id);
@@ -80,6 +85,7 @@ public class CodingCreatorController {
     }
 
     // ✅ Delete Full Coding Test (Test + Questions + TestCases)
+    @PreAuthorize("hasRole('CREATOR')")
     @DeleteMapping("/tests/{id}")
     public ResponseEntity<Void> deleteTest(@PathVariable Long id) {
         service.deleteCodingTest(id);
@@ -91,6 +97,7 @@ public class CodingCreatorController {
        ========================================================== */
 
     // ✅ Add Question Under Test
+    @PreAuthorize("hasRole('CREATOR')")
     @PostMapping("/tests/{testId}/questions")
     public CodingQuestionResponse createQuestion(
             @PathVariable Long testId,
@@ -103,6 +110,7 @@ public class CodingCreatorController {
 
 
     /* ✅ Update Question */
+    @PreAuthorize("hasRole('CREATOR')")
     @PutMapping("/questions/{id}")
     public CodingQuestion updateQuestion(
             @PathVariable Long id,
@@ -112,21 +120,24 @@ public class CodingCreatorController {
     }
 
     // ✅ Get Questions By Test
+    @PreAuthorize("hasRole('CREATOR')")
     @GetMapping("/tests/{testId}/question")
     public ResponseEntity<CodingQuestionResponse> getQuestionByStep(
             @PathVariable Long testId,
             @RequestParam Integer step
     ) {
-        return ResponseEntity.ok(service.getQuestionByStep(testId, step));
+        return ResponseEntity.ok(service.getQuestionByStep(testId, step));      
     }
 
     // ✅ Get Single Question
+    @PreAuthorize("hasRole('CREATOR')")
     @GetMapping("/questions/{id}")
     public CodingQuestionResponse getQuestion(@PathVariable Long id) {
         return service.getQuestionResponse(id);
     }
 
     // ✅ Delete Question (Also deletes TestCases)
+    @PreAuthorize("hasRole('CREATOR')")
     @DeleteMapping("/questions/{id}")
     public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
         service.deleteQuestion(id);
@@ -138,6 +149,7 @@ public class CodingCreatorController {
        ========================================================== */
 
     // ✅ Add TestCase to Question
+    @PreAuthorize("hasRole('CREATOR')")
     @PostMapping("/questions/{id}/test-cases")
     public CodingTestCaseResponse addTestCase(
             @PathVariable Long id,
@@ -147,6 +159,7 @@ public class CodingCreatorController {
     }
 
     /* ✅ Update TestCase */
+    @PreAuthorize("hasRole('CREATOR')")
     @PutMapping("/test-cases/{id}")
     public CodingTestCase updateTestCase(
             @PathVariable Long id,
@@ -157,15 +170,14 @@ public class CodingCreatorController {
 
     
     // ✅ Get TestCases of Question
+    @PreAuthorize("hasRole('CREATOR')")
     @GetMapping("/questions/{id}/test-cases")
-    public List<CodingTestCaseResponse> getTestCases(@PathVariable Long id) {
+    public List<CodingTestCaseResponse> getTestCases(@PathVariable Long id) {   
         return service.getTestCaseResponses(id);
     }
 
     // ✅ Delete TestCase
-    @DeleteMapping("/test-cases/{id}")
-    public ResponseEntity<Void> deleteTestCase(@PathVariable Long id) {
-        service.deleteTestCase(id);
+    @PreAuthorize("hasRole('CREATOR')")
         return ResponseEntity.ok().build();
     }
 
