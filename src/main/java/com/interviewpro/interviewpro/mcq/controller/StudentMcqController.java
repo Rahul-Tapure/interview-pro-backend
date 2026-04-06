@@ -23,7 +23,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/interviewpro/mcq/v1/student")
-@PreAuthorize("hasAnyRole('STUDENT','CREATOR')")
 public class StudentMcqController {
 
     @Autowired
